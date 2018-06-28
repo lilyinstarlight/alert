@@ -41,5 +41,5 @@ setup(
     install_requires=['fooster-web', 'twilio'],
     packages=find_packages(),
     package_data={'': ['html/*.*', 'res/*.*']},
-    entry_points = {'console_scripts': ['alert = alert.main']},
+    entry_points = {'console_scripts': ['alert = alert.__main__:main']},
 )
