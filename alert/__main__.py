@@ -47,6 +47,7 @@ def main():
 
     # setup logging
     log = logging.getLogger('alert')
+    log.setLevel(logging.INFO)
     if config.log:
         log.addHandler(logging.FileHandler(config.log))
     else:
