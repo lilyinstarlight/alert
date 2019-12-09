@@ -10,7 +10,7 @@ version = None
 
 
 def find(haystack, *needles):
-    regexes = [(index, re.compile("^{}\s*=\s*'([^']*)'$".format(needle))) for index, needle in enumerate(needles)]
+    regexes = [(index, re.compile(r'^{}\s*=\s*[\'"]([^\'"]*)[\'"]$'.format(needle))) for index, needle in enumerate(needles)]
     values = ['' for needle in needles]
 
     for line in haystack:
@@ -41,5 +41,5 @@ setup(
     install_requires=['fooster-web', 'twilio'],
     packages=find_packages(),
     package_data={'': ['html/*.*', 'res/*.*']},
-    entry_points = {'console_scripts': ['alert = alert.__main__:main']},
+    entry_points={'console_scripts': ['alert = alert.__main__:main']},
 )

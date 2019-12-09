@@ -1,4 +1,8 @@
-import fooster.web, fooster.web.form, fooster.web.page
+import logging
+
+import fooster.web
+import fooster.web.form
+import fooster.web.page
 
 from alert import config, alert
 
@@ -7,6 +11,9 @@ http = None
 
 routes = {}
 error_routes = {}
+
+
+log = logging.getLogger('alert')
 
 
 class Interface(fooster.web.page.PageHandler, fooster.web.form.FormHandler):
@@ -27,7 +34,9 @@ class Interface(fooster.web.page.PageHandler, fooster.web.form.FormHandler):
             alert.send(body)
 
             self.message = 'Successfully sent alert.'
-        except:
+        except Exception:
+            log.exception('Caught exception while trying to send alert')
+
             self.message = 'Failed to send alert.'
 
         return self.do_get()
