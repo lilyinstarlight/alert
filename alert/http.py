@@ -26,7 +26,7 @@ class Interface(fooster.web.page.PageHandler, fooster.web.form.FormHandler):
 
     def do_post(self):
         try:
-            body = self.request.body['body']
+            body = ('Alert: ' + self.request.body['body']).strip()
         except (KeyError, TypeError):
             raise fooster.web.HTTPError(400)
 
