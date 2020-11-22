@@ -5,7 +5,6 @@ import re
 from setuptools import setup, find_packages
 
 
-name = None
 version = None
 
 
@@ -24,20 +23,23 @@ def find(haystack, *needles):
                 del regexes[rindex]
                 break
 
-    return values
+    if len(needles) == 1:
+        return values[0]
+    else:
+        return values
 
 
 with open(os.path.join(os.path.dirname(__file__), 'alert', '__init__.py'), 'r') as alert:
-    name, version = find(alert, 'name', 'version')
+    version = find(alert, '__version__')
 
 
 setup(
-    name=name,
+    name='alert',
     version=version,
     description='a web service for sending an SMS over Twilio',
     license='MIT',
-    author='Foster McLane',
-    author_email='fkmclane@gmail.com',
+    author='Lily Foster',
+    author_email='lily@lily.flowers',
     install_requires=['fooster-web', 'twilio'],
     packages=find_packages(),
     package_data={'': ['html/*.*', 'res/*.*']},

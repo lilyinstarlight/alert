@@ -2,9 +2,6 @@ import argparse
 import importlib.util
 import logging
 import signal
-import sys
-
-import fooster.web
 
 from alert import config
 
@@ -44,27 +41,16 @@ def main():
     config.number = auth.number
     config.auth = auth.auth
 
-
-    # setup logging
-    log = logging.getLogger('alert')
-    log.setLevel(logging.INFO)
-    if config.log:
-        log.addHandler(logging.FileHandler(config.log))
-    else:
-        log.addHandler(logging.StreamHandler(sys.stdout))
-
-    if config.http_log:
-        http_log_handler = logging.FileHandler(config.http_log)
-        http_log_handler.setFormatter(fooster.web.HTTPLogFormatter())
-
-        logging.getLogger('http').addHandler(http_log_handler)
+    config._apply()
 
 
-    from alert import name, version
+    from alert import __version__
     from alert import http
 
 
-    log.info(name + ' ' + version + ' starting...')
+    log = logging.getLogger('alert')
+
+    log.info('alert ' + __version__ + ' starting...')
 
     # start everything
     http.start()
