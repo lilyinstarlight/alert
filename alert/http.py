@@ -16,7 +16,7 @@ error_routes = {}
 log = logging.getLogger('alert')
 
 
-class Interface(fooster.web.page.PageHandler, fooster.web.form.FormHandler):
+class Interface(fooster.web.form.FormMixIn, fooster.web.page.PageHandler):
     directory = config.template
     page = 'index.html'
     message = ''
