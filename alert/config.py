@@ -24,6 +24,9 @@ number = '+18005555555'
 # account or key details
 auth = ('AC0123456789abcdef0123456789abcdef', '0123456789abcdef0123456789abcdef')
 
+# passphrase
+passphrase = None
+
 
 # store config in env var
 def _store():

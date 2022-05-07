@@ -26,18 +26,21 @@ class Interface(fooster.web.form.FormMixIn, fooster.web.page.PageHandler):
 
     def do_post(self):
         try:
-            body = ('Alert: ' + self.request.body['body']).strip()
+            if not config.passphrase or ('passphrase' in self.request.body and self.request.body['passphrase'].strip() == config.passphrase.strip()):
+                body = ('Alert: ' + self.request.body['body']).strip()
+
+                try:
+                    alert.send(body)
+
+                    self.message = 'Successfully sent alert.'
+                except Exception:
+                    log.exception('Caught exception while trying to send alert')
+
+                    self.message = 'Failed to send alert.'
+            else:
+                self.message = 'Incorrect passphrase entered.'
         except (KeyError, TypeError):
             raise fooster.web.HTTPError(400)
-
-        try:
-            alert.send(body)
-
-            self.message = 'Successfully sent alert.'
-        except Exception:
-            log.exception('Caught exception while trying to send alert')
-
-            self.message = 'Failed to send alert.'
 
         return self.do_get()
 

@@ -41,6 +41,8 @@ def main():
     config.number = auth.number
     config.auth = auth.auth
 
+    config.passphrase = getattr(auth, 'passphrase', None)
+
     config._apply()
 
 
